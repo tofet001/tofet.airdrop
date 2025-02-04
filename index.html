@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html> 
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./assets/3.4.5"></script>
+    
+    <link rel="stylesheet" href="./assets/css/coin.css">
+    <link rel="stylesheet" href="./assets/css/style-2.css">
+    <link rel="stylesheet" href="./assets/css/responsive-1.css">
+
+    <style>
+        .score-display {
+            font-size: 50px;
+            position: absolute;
+            color: yellow;
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            75% {
+                transform: translateX(-5px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="min-h-screen bg-gradient-to-r from-[#C7913D] to-[#F1D06E] flex justify-center items-center p-3">
+        <div class="bg-gradient-to-r from-[#C7913D] to-[#F1D06E] rounded-3xl shadow-2xl p-4 w-full max-w-md text-white">
+            <div class="flex justify-between items-center mb-4 bg-slate-900/10 rounded-3xl shadow-xl">
+                <div class="flex items-center">
+                    <img src="./assets/images/logoo.jpg" width="40px" height="40px" alt="User Avatar" class="rounded-full mr-2">
+                    <span id="userName">Bota</span>
+                </div>
+                <button onclick="myFunction()" class="bg-600 p-2 rounded-full flex justify-between items-center bg-slate-1000/30 hover:bg-slate-900/5 rounded-3xl">
+                    <span class="font-bold text-lg"><img src="./assets/images/walletpic.png" alt="Sticker" style="width: 50px; height: 30px;"> Wallet</span>
+                </button>
+            </div>
+
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    setTimeout(function() {
+                        x.className = x.className.replace("show", "");
+                    }, 2000);
+                }
+            </script>
+
+            <div id="snackbar">
+                Coming Soon !!
+            </div>
+
+            <div class="flex justify-between items-center bg-slate-900/10 hover:bg-slate-900/5 p-2 rounded-3xl shadow-lg">
+                <button class="flex-1 items-center p-2">
+                    <a href="https://t.me/tofetairdrop">
+                        <span>Join Community</span>
+                    </a>
+                </button>
+            </div>
+
+            <div class="text-center mb-4 mt-8">
+                <div class="text-4xl mb-2">
+                    <img src="./assets/images/pc.png" width="50px" height="50px" alt="Coin" class="inline-block mb-1" id="coin-image">
+                    <span id="score" class="score font-bold text-4xl">$ 0</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center mb-4" id="coin">
+                <img src="./assets/images/pcoin.png" width="80%" height="80%" alt="Character" class="rounded-full clickable shadow-2xl" onclick="handleClick()">
+            </div>
+
+            <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center">
+                    <img src="./assets/images/charge.png" id="charge" alt="Energy" class="mr-2">
+                    <div class="flex justify-between items-center">
+                        <span id="inventory">500</span>
+                        <span> / 500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center bg-slate-900 rounded-3xl shadow-lg mb-2">
+                <div class="bg-zinc-600 rounded-3xl h-2 w-full mx-2">
+                    <div class="bg-gradient-to-r from-[#C7913D] to-[#F1D06E] h-2 rounded-3xl" style="width: 100%;" id="inventory-fill"></div>
+                </div>
+                <br>
+            </div>
+
+            <div class="flex justify-between items-center bg-slate-900 hover:bg-slate-900/95 p-3 rounded-3xl shadow-lg">
+                <button class="flex-1 flex flex-col items-center">
+                    <img src="./assets/images/m.png" alt="Mine" class="p-1" width="40px" height="40px">
+                    <span class="text-sm">Mine</span>
+                </button>
+                <button class="flex-1 flex flex-col items-center">
+                    <a href="nft.html">
+                        <img src="./assets/images/pcoin.png" alt="Boost" class="p-1" width="40px" height="40px">
+                        <span class="text-sm">NFT</span>
+                    </a>
+                </button>
+                <button class="flex-1 flex flex-col items-center">
+                    <a href="friend.html">
+                        <img src="./assets/images/f.png" alt="Friends" class="p-1 ml-1" width="40px" height="40px">
+                        <span class="text-sm">Friends</span>
+                    </a>
+                </button>
+                <button class="flex-1 flex flex-col items-center">
+                    <a href="task.html">
+                        <img src="./assets/images/t.png" alt="Task" class="p-1" width="40px" height="40px">
+                        <span class="text-sm">Task</span>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="sticker" style="display: none; position: absolute;">
+        <img src="./assets/images/kolang.png" alt="Sticker" style="width: 250px; height: 100px;">
+    </div>
+
+    <script>
+        let inventory = 500;
+        const maxInventory = 500;
+        const refillRate = 1; // Energy refilled per second
+        const rechargeTime = 1000; // 1 second for testing (change to 3600000 for 1 hour)
+
+        // Load saved energy and last update time from localStorage
+        function loadEnergy() {
+            const savedEnergy = localStorage.getItem('inventory');
+            const lastUpdate = localStorage.getItem('lastUpdate');
+
+            if (savedEnergy !== null) {
+                inventory = parseInt(savedEnergy, 10);
+            }
+
+            if (lastUpdate !== null) {
+                const timeElapsed = Math.floor((Date.now() - parseInt(lastUpdate, 10)) / 1000); // Time elapsed in seconds
+                const energyGained = Math.min(timeElapsed * refillRate, maxInventory - inventory);
+                inventory += energyGained;
+            }
+
+            updateInventory();
+        }
+
+        // Save energy and last update time to localStorage
+        function saveEnergy() {
+            localStorage.setItem('inventory', inventory);
+            localStorage.setItem('lastUpdate', Date.now());
+        }
+
+        // Start vibration if supported by the device
+        function startVibration() {
+            if ("vibrate" in navigator) {
+                window.navigator.vibrate(20);
+            } else {
+                console.log("Vibration not supported on this device");
+            }
+        }
+
+        // Handle click event on the image
+        function handleClick() {
+            if (inventory > 2) {
+                let coins = Number(localStorage.getItem('coins')) || 0; // Retrieve the saved coins
+                coins += 2;
+                localStorage.setItem('coins', coins); // Save updated coins to localStorage
+
+                inventory -= 2;
+                saveEnergy(); // Save energy after use
+
+                document.getElementById('score').textContent = `$ ${coins.toLocaleString()}`;
+                updateInventory();
+                startVibration();
+
+                const image = document.querySelector('.clickable');
+                image.classList.add('shake');
+                setTimeout(() => {
+                    image.classList.remove('shake');
+                }, 500);
+
+                const scoreDisplay = document.createElement('div');
+                scoreDisplay.textContent = "+4";
+                scoreDisplay.classList.add('score-display');
+                document.body.appendChild(scoreDisplay);
+
+                const rect = image.getBoundingClientRect();
+                scoreDisplay.style.left = `${rect.left + rect.width / 2}px`;
+                scoreDisplay.style.top = `${rect.top}px`;
+
+                setTimeout(() => {
+                    scoreDisplay.remove();
+                }, 1000);
+            }
+        }
+
+        // Update the inventory display and send data to the server
+        function updateInventory() {
+            document.getElementById('inventory').textContent = inventory;
+            document.getElementById('inventory-fill').style.width = `${(inventory / maxInventory) * 100}%`;
+
+            var formData = new FormData();
+            formData.append('username', 'Alex');
+            formData.append('charge', inventory);
+
+            fetch('update.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    console.error('Error:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Refill energy over time
+        function refillEnergy() {
+            if (inventory < maxInventory) {
+                inventory += refillRate;
+                if (inventory > maxInventory) inventory = maxInventory;
+                saveEnergy(); // Save energy after refill
+                updateInventory();
+            }
+        }
+
+        // Load user data and update inventory when the page loads
+        window.onload = () => {
+            const profilePic = localStorage.getItem('profilePic');
+            const userName = localStorage.getItem('userName');
+            let coins = localStorage.getItem('coins') || 0; // Retrieve saved coins or set to 0 if not available
+            let charge = localStorage.getItem('charge') || 0; // Retrieve saved charge or set to 0 if not available
+
+            if (profilePic) {
+                document.querySelector("img[alt='User Avatar']").src = profilePic;
+            }
+
+            if (userName) {
+                document.getElementById('userName').textContent = userName;
+            }
+
+            document.getElementById('score').textContent = `$ ${Number(coins).toLocaleString()}`; // Display saved coins
+            loadEnergy(); // Load saved energy
+            document.getElementById('charge').textContent = `$ ${Number(charge).toLocaleString()}`; // Display saved charge
+            updateInventory();
+        };
+
+        // Refill energy every second
+        setInterval(refillEnergy, 1000);
+    </script>
+</body>
+</html>

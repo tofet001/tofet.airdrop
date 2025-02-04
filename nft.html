@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Market</title>
+    <link rel="stylesheet" href="./assets/css/style-2.css">
+    <link rel="stylesheet" href="./assets/css/responsive-1.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #C7913D, #F1D06E);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .card button {
+            background: #76c7c0;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .card button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Card Market</h1>
+            <a href="index.html">Back to Main</a>
+        </div>
+
+        <!-- Card Grid -->
+        <div class="card-grid">
+            <!-- Card 1 -->
+            <div class="card" id="card-1">
+                <img src="./assets/images/auction-1.jpg" alt="Card 1">
+                <h3>Card 1</h3>
+                <p>Power: 100 | Price: 10,000 Coins</p>
+                <button onclick="buyCard('card-1')">Buy Now</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card" id="card-2">
+                <img src="./assets/images/auction-4.jpg" alt="Card 2">
+                <h3>Card 2</h3>
+                <p>Power: 200 | Price: 20,000 Coins</p>
+                <button onclick="buyCard('card-2')">Buy Now</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card" id="card-3">
+                <img src="./assets/images/auction-2.jpg" alt="Card 3">
+                <h3>Card 3</h3>
+                <p>Power: 300 | Price: 30,000 Coins</p>
+                <button onclick="buyCard('card-3')">Buy Now</button>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card" id="card-4">
+                <img src="./assets/images/auction-3.jpg" alt="Card 4">
+                <h3>Card 4</h3>
+                <p>Power: 400 | Price: 40,000 Coins</p>
+                <button onclick="buyCard('card-4')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2024 Your Game Name. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to buy a card
+        function buyCard(cardId) {
+            const cardElement = document.getElementById(cardId);
+            const ownedCards = JSON.parse(localStorage.getItem('ownedCards') || '{}');
+            const coins = parseInt(localStorage.getItem('coins') || '0');
+
+            // Check if the card is already owned
+            if (ownedCards[cardId]) {
+                alert("You already own this card!");
+                return;
+            }
+
+            // Get the price of the card
+            const price = parseInt(cardElement.querySelector('p').textContent.match(/\d+/g)[1]);
+
+            // Check if the user has enough coins
+            if (coins < price) {
+                alert("Not enough coins to buy this card!");
+                return;
+            }
+
+            // Deduct coins and add the card to owned cards
+            localStorage.setItem('coins', coins - price);
+            ownedCards[cardId] = true;
+            localStorage.setItem('ownedCards', JSON.stringify(ownedCards));
+
+            // Update the UI
+            cardElement.querySelector('button').textContent = 'Owned';
+            cardElement.querySelector('button').disabled = true;
+
+            
+        }
+
+        // Load owned cards and update the UI
+        function loadOwnedCards() {
+            const ownedCards = JSON.parse(localStorage.getItem('ownedCards') || '{}');
+            for (const cardId in ownedCards) {
+                const cardElement = document.getElementById(cardId);
+                if (cardElement) {
+                    cardElement.querySelector('button').textContent = 'Owned';
+                    cardElement.querySelector('button').disabled = true;
+                }
+            }
+        }
+
+        // Load owned cards when the page loads
+        window.onload = loadOwnedCards;
+    </script>
+</body>
+
+</html>

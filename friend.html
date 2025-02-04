@@ -1,0 +1,150 @@
+﻿<!-- Add this to your main page (index.html) navigation -->
+<button class="flex-1 flex flex-col items-center">
+      <img src="./assets/images/referrals.jpg" alt="Referral" class="p-1" width="40px" height="40px">
+      <span class="text-sm">Referral</span>
+  </a>
+</button>
+
+<!-- Create new file referral.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral System</title>
+  <link rel="stylesheet" href="./assets/css/style-2.css">
+  <style>
+      .referral-container {
+          background: linear-gradient(to right, #C7913D, #F1D06E);
+          color: white;
+          padding: 20px;
+          border-radius: 15px;
+          margin: 20px;
+      }
+
+      .referral-code {
+          background: rgba(0,0,0,0.3);
+          padding: 15px;
+          border-radius: 10px;
+          margin: 15px 0;
+      }
+
+      .referral-list {
+          margin-top: 20px;
+          max-height: 300px;
+          overflow-y: auto;
+      }
+
+      .referral-item {
+          background: rgba(255,255,255,0.1);
+          padding: 10px;
+          margin: 5px 0;
+          border-radius: 8px;
+      }
+  </style>
+</head>
+<body class="boost">
+    <!-- Header -->
+    <div class="header">
+        <a href="index.html">Back to Main</a>
+    </div>
+  <div class="haeder">
+      <a href="index.html">
+          <!-- Same back button as other pages -->
+      </a>
+  </div>
+
+  <div class="referral-container">
+      <h2>Referral Program</h2>
+      <div class="referral-code">
+          <p>Your Referral Link:</p>
+          <input type="text" id="referral-link" readonly style="width:100%; padding:5px; margin:10px 0;">
+          <button onclick="copyReferralLink()">Copy Link</button>
+      </div>
+
+      <div class="referral-stats">
+          <p>Total Referrals: <span id="total-referrals">0</span></p>
+          <p>Earned Coins: <span id="earned-coins">0</span></p>
+      </div>
+
+      <div class="referral-list" id="referral-list">
+          <h3>Your Referrals:</h3>
+          <!-- Referrals will be listed here -->
+      </div>
+  </div>
+
+  <script>
+      // Generate unique referral code
+      function generateReferralCode() {
+          let userId = localStorage.getItem('userId');
+          if (!userId) {
+              userId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+              localStorage.setItem('userId', userId);
+          }
+          return userId;
+      }
+
+      // Initialize referral system
+      function initReferral() {
+          const referralCode = generateReferralCode();
+          const referralLink = `https://t.me/TofeyintiBot?ref=${referralCode}`;
+          document.getElementById('referral-link').value = referralLink;
+
+          // Load referral data
+          const referralData = JSON.parse(localStorage.getItem('referralData') || '{"count":0,"earned":0,"referrals":[]}');
+          document.getElementById('total-referrals').textContent = referralData.count;
+          document.getElementById('earned-coins').textContent = referralData.earned.toLocaleString();
+          
+          // Populate referrals list
+          const list = document.getElementById('referral-list');
+          referralData.referrals.forEach(ref => {
+              const div = document.createElement('div');
+              div.className = 'referral-item';
+              div.textContent = `${ref.date}: ${ref.userId}`;
+              list.appendChild(div);
+          });
+      }
+
+      function copyReferralLink() {
+          const link = document.getElementById('referral-link');
+          link.select();
+          document.execCommand('copy');
+      }
+
+      // Check for referral on main page load (add this to index.html's script)
+      function checkReferral() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const refCode = urlParams.get('ref');
+          
+          if (refCode && refCode !== localStorage.getItem('userId')) {
+              let referralData = JSON.parse(localStorage.getItem('referralData') || '{"count":0,"earned":0,"referrals":[]}');
+              
+              // Check if already referred
+              if (!referralData.referrals.some(r => r.userId === refCode)) {
+                  // Add coins to both users
+                  let coins = parseInt(localStorage.getItem('coins') || '0');
+                  coins += 5000;
+                  localStorage.setItem('coins', coins);
+
+                  // Update referrer's data
+                  referralData.count++;
+                  referralData.earned += 5000;
+                  referralData.referrals.push({
+                      userId: refCode,
+                      date: new Date().toLocaleDateString()
+                  });
+                  localStorage.setItem('referralData', JSON.stringify(referralData));
+                  
+                  alert('You received 5000 coins for using a referral link!');
+              }
+          }
+      }
+
+      // Add to index.html's window.onload:
+      // checkReferral();
+
+      // Initialize referral page
+      window.onload = initReferral;
+  </script>
+</body>
+</html>

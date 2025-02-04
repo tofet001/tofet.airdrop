@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlexCoin - Tasks</title>
+    <link rel="stylesheet" href="./assets/css/style-2.css">
+    <link rel="stylesheet" href="./assets/css/responsive-1.css">
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <link rel="icon" type="image/png" href="./assets/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./assets/images/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="./assets/images/favicon/apple-touch-icon.png">
+    <link rel="android-chrome-192x192" href="./assets/images/android-chrome-192x192.png" sizes="192x192">
+    <link rel="android-chrome-512x512" href="./assets/images/android-chrome-512x512.png" sizes="512x512">
+    <script src="./assets/3.4.5"></script>
+    <link rel="stylesheet" href="npm/swiper%4011/swiper-bundle.min.css">
+    <style>
+        * {
+            user-select: none;
+        }
+
+        @keyframes slide-up {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            animation: slide-up 0.5s ease-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #task {
+            border: 2px solid aqua;
+            border-radius: 1em;
+            margin: 10px;
+            padding: 10px;
+            height: 5%;
+        }
+
+        .swiper {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 10px;
+        }
+
+        .swiper-slide {
+            margin-bottom: 10px;
+            display: block;
+            max-height: 200px;
+        }
+
+        .boosters-button-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .boosters-button-data {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .swiper {
+                max-height: 100%;
+                flex-direction: column;
+            }
+
+            .swiper-slide {
+                margin-bottom: 15px;
+            }
+        }
+
+        .claimed {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="boost">
+    <div class="haeder">
+        <a href="index.html">
+            <svg width="25px" height="25px" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 11.9299H2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M8.00009 19L2.84009 14C2.5677 13.7429 2.35071 13.433 2.20239 13.0891C2.05407 12.7452 1.97754 12.3745 1.97754 12C1.97754 11.6255 2.05407 11.2548 2.20239 10.9109C2.35071 10.567 2.5677 10.2571 2.84009 10L8.00009 5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </a>
+    </div>
+
+    <div class="user-balance ml-4 mr-4 bg-slate-900 rounded-3xl shadow-lg p-4 mt-2">
+        <div class="balance-coins">
+            <img src="./assets/images/pc.png" width="50px" alt="">
+            <span id="score">0</span>
+        </div>
+        <div class="balance-title">
+            <span class="select-none text-center">Do the tasks to mine more coins</span>
+            <hr class="mt-2">
+        </div>
+    </div>
+
+    <div class="buy-skins">
+        <div class="boosters-title" style="padding: 0 1.25rem">
+            <h2 class="select-none text-2xl">Tasks</h2>
+        </div>
+        <div class="swiper skinSwiper">
+            <div class="swiper-wrapper">
+                <!-- First Task -->
+                <div class="swiper-slide slide" id="task-1">
+                    <div class="skin-button m-b-1">
+                        <div class="boosters-button-detail">
+                            <a href="http://www.youtube.com/@Tofet-Airdrop" target="_blank" onclick="claimTask('task-1')">
+                                <div class="boosters-button-image">
+                                    <img src="./assets/images/youtube.png" width="50px" alt="Character">
+                                </div>
+                                <div>
+                                    <h4 class="tooltip">Subscribe Seller Alex
+                                        <span class="tooltiptext">Daily bonus with unique rewards</span>
+                                    </h4>
+                                    <div class="boosters-button-data">
+                                        <img src="./assets/images/pc.png" width="20px" class="m-r-25">
+                                        <h5>50,000 <span class="claim-text">Claim Now</span></h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second Task -->
+                <div class="swiper-slide slide" id="task-2">
+                    <div class="skin-button m-b-1">
+                        <div class="boosters-button-detail">
+                            <a href="https://t.me/tofetairdrop" target="_blank" onclick="claimTask('task-2')">
+                                <div class="boosters-button-image">
+                                    <img src="./assets/images/telegram.png" width="50px" alt="Character">
+                                </div>
+                                <div>
+                                    <h4 class="tooltip">Join Community
+                                        <span class="tooltiptext">Daily bonus with unique rewards</span>
+                                    </h4>
+                                    <div class="boosters-button-data">
+                                        <img src="./assets/images/pc.png" width="20px" class="m-r-25">
+                                        <h5>50,000 <span class="claim-text">Claim Now</span></h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Third Task -->
+                <div class="swiper-slide slide" id="task-3">
+                    <div class="skin-button m-b-1">
+                        <div class="boosters-button-detail">
+                            <a href="http://www.tiktok.com/@tofet.airdrop" target="_blank" onclick="claimTask('task-3')">
+                                <div class="boosters-button-image">
+                                    <img src="./assets/images/tikto.jpg" width="50px" alt="Character">
+                                </div>
+                                <div>
+                                    <h4 class="tooltip">Follow Tofet-Airdrop
+                                        <span class="tooltiptext">Daily bonus with unique rewards</span>
+                                    </h4>
+                                    <div class="boosters-button-data">
+                                        <img src="./assets/images/pc.png" width="20px" class="m-r-25">
+                                        <h5>50,000 <span class="claim-text">Claim Now</span></h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fourth Task -->
+                <div class="swiper-slide slide" id="task-4">
+                    <div class="skin-button m-b-1">
+                        <div class="boosters-button-detail">
+                            <a href="http://www.facebook.com/profile.php?id=61572961434699" target="_blank" onclick="claimTask('task-4')">
+                                <div class="boosters-button-image">
+                                    <img src="./assets/images/facebook.jpg" width="50px" alt="Character">
+                                </div>
+                                <div>
+                                    <h4 class="tooltip">Subscribe Tofet-Airdrop
+                                        <span class="tooltiptext">Daily bonus with unique rewards</span>
+                                    </h4>
+                                    <div class="boosters-button-data">
+                                        <img src="./assets/images/pc.png" width="20px" class="m-r-25">
+                                        <h5>50,000 <span class="claim-text">Claim Now</span></h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="npm/swiper%4011/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper with vertical layout
+        var swiper = new Swiper(".skinSwiper", {
+            direction: "vertical",
+            slidesPerView: 1,
+            spaceBetween: 10,
+            grabCursor: true,
+        });
+
+        // Function to claim a task
+        function claimTask(taskId) {
+            const taskElement = document.getElementById(taskId);
+            const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks') || '{}');
+
+            // Check if the task has already been claimed
+            if (claimedTasks[taskId]) {
+                alert("You have already claimed this task!");
+                return;
+            }
+
+            // Mark the task as claimed
+            claimedTasks[taskId] = true;
+            localStorage.setItem('claimedTasks', JSON.stringify(claimedTasks));
+
+            // Update the UI
+            taskElement.classList.add('claimed');
+            const claimText = taskElement.querySelector('.claim-text');
+            if (claimText) {
+                claimText.textContent = 'Done';
+            }
+
+            // Add coins to the main balance
+            let coins = parseInt(localStorage.getItem('coins') || '0');
+            coins += 10000; // Add 10,000 coins
+            localStorage.setItem('coins', coins);
+
+            // Update the coin display
+            document.getElementById('score').textContent = coins.toLocaleString();
+
+            alert("Task claimed! 10,000 coins have been added to your balance.");
+        }
+
+        // Load claimed tasks and update the UI
+        function loadClaimedTasks() {
+            const claimedTasks = JSON.parse(localStorage.getItem('claimedTasks') || '{}');
+            for (const taskId in claimedTasks) {
+                const taskElement = document.getElementById(taskId);
+                if (taskElement) {
+                    taskElement.classList.add('claimed');
+                    const claimText = taskElement.querySelector('.claim-text');
+                    if (claimText) {
+                        claimText.textContent = 'Done';
+                    }
+                }
+            }
+        }
+
+        // Load claimed tasks when the page loads
+        window.onload = loadClaimedTasks;
+    </script>
+</body>
+
+</html>
